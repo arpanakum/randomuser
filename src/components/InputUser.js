@@ -1,7 +1,8 @@
-import React,{useState,useEffect,useRef} from 'react';
+import React, { useState, useEffect, useRef,useCallback } from 'react';
+import ResetButton from './ResetButton';
 
-export default function InputUser() {
-    const [name, SetName] = useState('');
+function InputUser() {
+    const [name, setName] = useState('');
     const nameRef = useRef('');
 
     useEffect(() => {
@@ -9,13 +10,20 @@ export default function InputUser() {
     }, [])
 
     const handleInputChange = (e) => {
-        SetName(e.target.value);
+        setName(e.target.value);
     }
+
+    const handleReset = useCallback(() => {
+        setName('');
+    },[]);
 
     return (
         <div>
-            <input type="text" onChange={handleInputChange} placeholder="Enter your name" ref={nameRef}></input>
+            <input type="text" onChange={handleInputChange} placeholder="Enter your name" ref={nameRef} value={name}></input>
             <p>My name is {name}</p>
+            <ResetButton handleReset={handleReset}>Reset Input</ResetButton>
         </div>
     )
 }
+
+export default React.memo(InputUser);

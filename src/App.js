@@ -1,7 +1,9 @@
 import React, {useState,useEffect,useMemo,useRef} from 'react';
 import './App.css';
-import User from './components/User'
+import UserList from './components/UserList'
 import InputUser from './components/InputUser'
+import Header from './components/Header';
+import Extras from './components/Extras'
 
 function App() {
 
@@ -25,9 +27,9 @@ function App() {
     setWidth(window.innerWidth);
   }
 
- const memoUser = useMemo(() => {
-    return <User userData={data}></User>
-  },[data])
+ /*const memoUser = useMemo(() => {
+    return <UserList userData={data}></UserList>
+  },[data])*/
 
   const handleIncrement = () => {
     setCount(prevCount => prevCount+1);
@@ -35,12 +37,11 @@ function App() {
     
   return (
     <div className="App">
-      <p>Screen Width:{screenWidth}</p>
-      <h1> Counter: {count}</h1>
-      <button onClick={handleIncrement}>+</button>
+      <Header></Header>
+      <Extras screenWidth={screenWidth} count={count} handleIncrement={handleIncrement}/>
       <br/>
       <InputUser></InputUser>
-      {memoUser}
+      <UserList userData={data}></UserList>
     </div>
   );
 }
