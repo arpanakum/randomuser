@@ -1,10 +1,18 @@
-import React from 'react';
+import React , {useState,useEffect} from 'react';
 
 function UserList(props) {
 
-    const users = props.userData;
-    console.log("userlist component rendered--");
-    const userList = users.map((user, i) => {
+    const [data,setData] = useState([]);
+  
+  
+    useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(response => response.json())
+    .then(users => {setData(users);});
+    }, []);
+
+    
+    const userList = {data}.data.map((user, i) => {
         return <p key={user.id} className={i % 2 ? 'even' : 'odd'}>{user.name}</p>;
     })
 

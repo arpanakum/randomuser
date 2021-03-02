@@ -1,11 +1,31 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 
 export default function Extras(props){
- return (
+
+  const [count,setCount] = useState(0);
+  const [screenWidth,setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    }
+  }, [])
+
+  function handleResize(){
+    setWidth(window.innerWidth);
+  }
+
+  const handleIncrement = () => {
+    setCount(prevCount => prevCount+1);
+  }
+
+  return (
      <>
-    <p>Screen Width:{props.screenWidth}</p>
-    <h1> Counter: {props.count}</h1>
-    <button onClick={props.handleIncrement}>+</button>
+    <p>Screen Width:{screenWidth}</p>
+    <h1> Counter: {count}</h1>
+    <button onClick={handleIncrement}>+</button>
     </>
  )
 }
