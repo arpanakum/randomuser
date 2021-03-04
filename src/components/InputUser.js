@@ -17,11 +17,22 @@ function InputUser() {
         setName('');
     },[]);
 
+    const handleSave = (e) => {
+        e.preventDefault();
+        if(name !== '')
+            alert("New User is saved!")
+        else
+            alert("Please enter User name")
+    }
+
     return (
         <div>
-            <input type="text" onChange={handleInputChange} placeholder="Enter your name" ref={nameRef} value={name}></input>
-            <p>My name is {name}</p>
-            <ResetButton handleReset={handleReset}>Reset Input</ResetButton>
+            <form onSubmit={handleSave}>
+                <input type="text" onChange={handleInputChange} placeholder="Enter your name" ref={nameRef} value={name}></input>
+                <p>My name is {name}</p>
+                <ResetButton handleReset={handleReset}>Reset Input</ResetButton>
+                <input type="submit" onClick={handleSave} value="Save"/>
+            </form>
         </div>
     )
 }
