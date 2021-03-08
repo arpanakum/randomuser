@@ -6,7 +6,7 @@ import {incrementCounter} from '../actions/actions'
 // returns an object
 const mapStateToProps = (state) => {
   return {
-    count:state.counter
+    count:state.setCounter.counter
   }
 } 
 
@@ -47,7 +47,5 @@ class Extras extends React.Component{
   }
   
 }
-
-
 
 export default connect(mapStateToProps,mapDispatchToProps)(Extras);

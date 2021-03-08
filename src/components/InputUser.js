@@ -1,37 +1,34 @@
-import React, { useState, useEffect, useRef,useCallback } from 'react';
+import React, { useState, useEffect, useRef,useCallback} from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import ResetButton from './ResetButton';
+import {saveUser} from '../actions/actions'
 
-function InputUser() {
-    const [name, setName] = useState('');
+function InputUser(props) {
+   // const [name, setName] = useState('');
     const nameRef = useRef('');
-
+    const dispatch = useDispatch();
+    const userName = useSelector(state => state.setUser.user);
+    
     useEffect(() => {
         nameRef.current.focus();
     }, [])
 
-    const handleInputChange = (e) => {
-        setName(e.target.value);
-    }
-
-    const handleReset = useCallback(() => {
-        setName('');
-    },[]);
+   /*const handleReset = useCallback(() => {
+        console.log('reset user name');
+    },[]);*/
 
     const handleSave = (e) => {
         e.preventDefault();
-        if(name !== '')
-            alert("New User is saved!")
-        else
-            alert("Please enter User name")
+       
     }
 
     return (
-        <div>
+        <div style={{marginTop: '20px'}}>
             <form onSubmit={handleSave}>
-                <input type="text" onChange={handleInputChange} placeholder="Enter your name" ref={nameRef} value={name}></input>
-                <p>My name is {name}</p>
-                <ResetButton handleReset={handleReset}>Reset Input</ResetButton>
-                <input type="submit" onClick={handleSave} value="Save"/>
+                <input type="text" onChange={(e) => dispatch(saveUser(e.target.value))} placeholder="Enter your name" ref={nameRef} value={userName}></input>
+                <p>My name is {userName}</p>
+                <ResetButton handleReset={(e) => dispatch(saveUser(''))}>Reset Input</ResetButton>
+                <input style={{margin: '10px'}} type="submit" value="Save"/>
             </form>
         </div>
     )
